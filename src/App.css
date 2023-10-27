@@ -1,13 +1,35 @@
-.scattered-clouds-dia {
-    background-image: url('https://img.freepik.com/foto-gratis/hojas-verdes-sol_1127-3826.jpg?size=626&ext=jpg&ga=GA1.2.1413851642.1693077997&semt=ais');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+body {
+    position: relative;
 }
 
-/* .default-background {
-    background-image: url('https://img.freepik.com/foto-gratis/hojas-verdes-sol_1127-3826.jpg?size=626&ext=jpg&ga=GA1.2.1413851642.1693077997&semt=ais');
-    background-position: center;
-    background-repeat: no-repeat;
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-image: url('https://img.freepik.com/foto-gratis/espectacular-silueta-montana-cielo-al-atardecer-impresionante-generada-ia_188544-29865.jpg?w=1480&t=st=1698376298~exp=1698376898~hmac=99d165c1e017e9f6d5690cc02069e4d1caae98fe4ab655051b8d24f45dfb60a0');
+    background-position: top;
     background-size: cover;
-} */
+    filter: blur(3px);
+    z-index: -1;
+}
+
+.container-search {
+    position: relative;
+}
+
+.container-search::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-image: url('https://img.freepik.com/foto-gratis/colorido-cielo-nocturno-estrellas-nebulosa_1048-8479.jpg?w=1060&t=st=1698376105~exp=1698376705~hmac=6876defbdac5bc554564df3f0c6fcf5ccd5b3797dfd242cb9c05e38b88c83a66');
+    background-position: bottom;
+    background-size: cover;
+    filter: blur(3px);
+    z-index: -1;
+}

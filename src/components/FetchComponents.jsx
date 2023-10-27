@@ -1,164 +1,161 @@
-import { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
-import fetchWeather from '../helpers/fetchWeather';
-import fetchMedellin from '../helpers/fetchMedellin';
-import fetchBogota from '../helpers/fetchBogota'
-import '../App.css';
+import { useState, useEffect, useCallback } from "react";
+import fetchWeather from "../helpers/fetchWeather";
+import fetchMedellin from "../helpers/fetchMedellin";
+import fetchBogota from "../helpers/fetchBogota";
+import { getGeolocation } from "../helpers/getGeolocation";
+import { LuLocateFixed } from "react-icons/lu";
+import { MdLocationOn } from "react-icons/md";
+import "../App.css";
 
 const FetchComponents = () => {
-    const [buscar, setBuscar] = useState('');
-    const [geolocation, setGeolocation] = useState(null);
-    const [locationName, setLocationName] = useState('');
-    const [temp, setTemp] = useState(null);
-    const [description, setDescription] = useState(null);
-    const [icon, setIcon] = useState(null);
-    const [name, setName] = useState('');
+  const [buscar, setBuscar] = useState("");
+  const [geolocation, setGeolocation] = useState(null);
+  const [locationName, setLocationName] = useState("");
+  const [temp, setTemp] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [icon, setIcon] = useState(null);
+  const [name, setName] = useState("");
 
-    const getWeather = useCallback((() => {
-        fetchWeather()
-                .then((data) => {
-                // Actualiza los estados traidos desde fetchWeather.js con los datos de la API
-                setName(data.name)
-                setTemp(data.main.temp);
-                setDescription(data.weather[0].description);
-                setIcon(data.iconUrl)
+  const getWeather = useCallback(() => {
+    fetchWeather()
+      .then((data) => {
+        // Actualiza los estados traidos desde fetchWeather.js con los datos de la API
+        setName(data.name);
+        setTemp(data.main.temp);
+        setDescription(data.weather[0].description);
+        setIcon(data.iconUrl);
 
-                console.log(data)
-                })
-                .catch((error) => {
-                    console.error('Error al obtener el clima:', error);
-                  });
-                console.log("Se ejecuto callBack")
-    }))
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener el clima:", error);
+      });
+    console.log("Se ejecuto callBack");
+  });
 
-    const getClimaMedellin = (() => {
-        fetchMedellin()
-                .then((dataMedellin) =>{
-                    setName(dataMedellin.name)
-                    setTemp(dataMedellin.main.temp);
-                    setDescription(dataMedellin.weather[0].description);
-                    setIcon(dataMedellin.iconUrlMedellin);
-                })
-    })
+  const getClimaMedellin = () => {
+    fetchMedellin().then((dataMedellin) => {
+      setName(dataMedellin.name);
+      setTemp(dataMedellin.main.temp);
+      setDescription(dataMedellin.weather[0].description);
+      setIcon(dataMedellin.iconUrlMedellin);
+    });
+  };
 
-    const getClimaBogota = (() => {
-        fetchBogota()
-                .then((dataBogota) => {
-                    setName(dataBogota.name)
-                    setTemp(dataBogota.main.temp);
-                    setDescription(dataBogota.weather[0].description);
-                    setIcon(dataBogota.iconUrlMedellin);
-                })
-    })
+  const getClimaBogota = () => {
+    fetchBogota().then((dataBogota) => {
+      setName(dataBogota.name);
+      setTemp(dataBogota.main.temp);
+      setDescription(dataBogota.weather[0].description);
+      setIcon(dataBogota.iconUrlMedellin);
+    });
+  };
 
-    useEffect(() => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-              async (position) => {
-                const apiKey = '7a6e9bffe5784cae81ec5d4c82e23a81';
-                const { latitude, longitude } = position.coords;
-                setGeolocation({ latitude, longitude });
-      
-                try {
-                  const response = await axios.get(
-                    `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}`
-                  );
+  // useEffect para llamar la api de geolocation
+  useEffect(() => {
+    getGeolocation()
+      .then((name) => {
+        setLocationName(name);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
-                  console.log(response)
-      
-                  const { results } = response.data;
-                  if (results && results.length > 0) {
-                    const { components } = results[0];
-                    setLocationName(components.city || components.town || components.county);
-                  }
-                } catch (error) {
-                  console.error('Error obteniendo el nombre de la ubicación:', error);
-                }
-              },
-              (error) => {
-                console.error('Error obteniendo la geolocalización:', error);
-              }
-            );
-          } else {
-            console.error('La geolocalización no está disponible en este navegador.');
-          }
-      }, []);
+  // useEffect para la consulta de medellin al cargar la pagina
+  useEffect(() => {
+    getClimaMedellin();
+    console.log("Consultando medellin de primera");
+  }, []);
 
-
-    useEffect(() => {
-        getClimaMedellin()
-        console.log("Consultando medellin de primera")
-    },[])
-
-    function getBackgroundClass(icon) {
-        const iconClassMap = {
-            // dia
-        '01d': 'clear-sky-dia',
-        '02d': 'few-clouds-dia',
-        '03d': 'scattered-clouds-dia',
-        '04d': 'broken-clouds-dia',
-        '09d': 'shower-rain-dia',
-        '10d': 'rain-dia',
-        '11d': 'thunderstorm-dia',
-        '13d': 'snow-dia',
-        '50d': 'mist-dia',
-        // noche
-        '01n': 'clear-sky-noche',
-        '02n': 'few-clouds-noche',
-        '03n': 'scattered-clouds-noche',
-        '04n': 'broken-clouds-noche',
-        '09n': 'shower-rain-noche',
-        '10n': 'rain-dia',
-        '11n': 'thunderstorm-noche',
-        '13n': 'snow-noche',
-        '50n': 'mist-noche',
-        }
-        const backgroundClass = iconClassMap[icon] ;
-        console.log('Icon:', icon);
-        console.log('Background Class:', backgroundClass);
-        return backgroundClass;
-
+  // evento para buscar dando enter
+  const handleEnterKey = (e) => {
+    if (e.key === "Enter") {
+      getWeather(buscar);
+      setBuscar("");
     }
-
+  };
 
   return (
-    <div className={`content-container ${getBackgroundClass(icon)}`}>
-        <h1>Wheather API</h1>
-        <div>
-            <input 
-                type="text" 
-                name='wheather' 
-                id='weather'
-                value={buscar}
-                onChange={(e) => setBuscar(e.target.value)} 
-            />
-            <button onClick={() => getWeather(buscar)}>Buscar</button>
+    <div className="w-full pl-1">
+      <div className="container-search w-96 mr-auto text-center h-screen flex flex-col items-center justify-center">
+        <div className="w-full py-5 flex justify-evenly items-center">
+          <input
+            type="text"
+            name="wheather"
+            placeholder="Buscar..."
+            id="weather"
+            value={buscar}
+            className="border-2 rounded-md py-2 pl-2"
+            onKeyDown={handleEnterKey}
+            onChange={(e) => setBuscar(e.target.value)}
+          />
+          <button
+            className="bg-white rounded-full ml-2 w-10 h-10 flex justify-center items-center"
+            onClick={() => {
+              getWeather(buscar);
+              setBuscar("");
+            }}
+          >
+            {" "}
+            <LuLocateFixed className="w-8 h-8 text-black p-1" />
+          </button>
         </div>
 
         {temp !== null && description !== null && (
-            <div className='flex flex-col items-end'>
-                <h2>{name}</h2>
-                <p>Temperatura: {temp} °C</p>
-                <p>Clima: {description}</p>
-                <img src={icon} alt='icon_weather' />
+          <div className="flex flex-col">
+            {/* titulo de la ciudad */}
+            <h2 className="text-4xl font-bold text-white">{name}</h2>
+            {/* icono */}
+            <div className="flex justify-center">
+              <img src={icon} alt="icon_weather" className="w-60 h-60" />
             </div>
+
+            {/* texto información clima */}
+            <div>
+              <p>
+                <strong className="text-6xl text-white">
+                  {temp.toFixed()}
+                </strong>
+                <span className="text-2xl font-semibold text-white">°C</span>
+              </p>
+              <p className="my-4 text-3xl font-medium text-white">
+                {description}
+              </p>
+            </div>
+          </div>
         )}
 
-        <div>
-            <button onClick={() => getClimaMedellin()} className='mr-4 bg-slate-800 text-white pt-2 pb-2 pr-5 pl-5 rounded-xl hover:bg-slate-950'>Clima Medellín</button>
-            <button onClick={() => getClimaBogota()} className=' bg-slate-800 text-white pt-2 pb-2 pr-5 pl-5 rounded-xl hover:bg-slate-950'>Clima Bogotá</button>
+        <div className="mt-5">
+          <button
+            onClick={() => getClimaMedellin()}
+            className="mr-3 bg-stone-100 text-black font-semibold pt-2 pb-2 pr-5 pl-5 rounded-sm hover:bg-red-600 hover:text-white"
+          >
+            Clima Medellín
+          </button>
+          <button
+            onClick={() => getClimaBogota()}
+            className=" bg-slate-800 font-semibold text-white pt-2 pb-2 pr-5 pl-5 rounded-sm hover:bg-red-600"
+          >
+            Clima Bogotá
+          </button>
         </div>
 
-        {geolocation && (
-            <div>
-                <h2>Ubicación activada en tu equipo: {locationName}</h2>
-                {/* <p>Latitud: {geolocation.latitude}</p>
-                <p>Longitud: {geolocation.longitude}</p> */}
-            </div>
+        {locationName && (
+          <div className="mt-7 flex">
+            <h2 className="text-white text-lg flex items-center">
+              Ubicación activada  
+              <MdLocationOn className="text-red-500"/> 
+              {locationName}
+            </h2>
+            {/* También puedes mostrar la latitud y longitud si es necesario */}
+            {/* <p>Latitud: {geolocation.latitude}</p> */}
+            {/* <p>Longitud: {geolocation.longitude}</p> */}
+          </div>
         )}
-
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default FetchComponents
+export default FetchComponents;
