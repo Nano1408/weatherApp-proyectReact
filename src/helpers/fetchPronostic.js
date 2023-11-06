@@ -7,7 +7,16 @@ const fetcPronostic = async () => {
         navigator.geolocation.getCurrentPosition(async (position) => {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
-        const URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&lang=es&units=metric`;
+        const cityName = document.getElementById('forecast').value;
+        let URL = '';
+
+        if (cityName) {
+            // Si se proporciona un nombre de ciudad, usamos esa opción
+            URL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&lang=es&units=metric`;
+        } else {
+            // Si no se proporciona un nombre de ciudad, utilizamos la geolocalización
+            URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&lang=es&units=metric`;
+        }
 
         try {
             const res = await fetch(URL);
@@ -39,9 +48,7 @@ const fetcPronostic = async () => {
     });
     } else {
     console.error("Geolocalización no está disponible en este dispositivo.");
-    return Promise.reject(
-        "Geolocalización no está disponible en este dispositivo."
-    );
+    return Promise.reject("Geolocalización no está disponible en este dispositivo.");
 }
 };
 
