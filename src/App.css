@@ -2,19 +2,19 @@ body {
     position: relative;
 }
 
-body::before {
+/* body::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
-    background-image: url('https://img.freepik.com/foto-gratis/espectacular-silueta-montana-cielo-al-atardecer-impresionante-generada-ia_188544-29865.jpg?w=1480&t=st=1698376298~exp=1698376898~hmac=99d165c1e017e9f6d5690cc02069e4d1caae98fe4ab655051b8d24f45dfb60a0');
+    background-color: #100E1D;
     background-position: top;
     background-size: cover;
     filter: blur(3px);
     z-index: -1;
-}
+} */
 
 .container-search {
     position: relative;
@@ -27,9 +27,96 @@ body::before {
     left: 0;
     width: 100%;
     height: 100vh;
-    background-image: url('https://img.freepik.com/foto-gratis/colorido-cielo-nocturno-estrellas-nebulosa_1048-8479.jpg?w=1060&t=st=1698376105~exp=1698376705~hmac=6876defbdac5bc554564df3f0c6fcf5ccd5b3797dfd242cb9c05e38b88c83a66');
-    background-position: bottom;
-    background-size: cover;
-    filter: blur(3px);
+    background-color: #1E213A;
+    background-image: url("/public/nubes.png");
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size:contain;
+    filter: blur(2px);
     z-index: -1;
 }
+
+@media screen and (max-width:980px) {
+    .containerSectionEstado > div {
+        width: 200px;
+    }
+    .containerSectionEstado > div > h3 {
+        font-size: 2rem;
+    }
+    .containerSectionEstado > div > h3 > span{
+        font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .sectionCalc > div > h2 {
+        margin-left: 0;
+    }
+    
+    .containerSectionEstado {
+        grid-template-columns: repeat(1, 1fr) !important;
+    }
+    .containerSectionEstado > div {
+        width: 300px;
+    }
+    .containerSectionEstado > div > h3 {
+        font-size: 3.3rem;
+    }
+    .containerSectionEstado > div > h3 > span{
+        font-size: 2.5rem;
+    }
+}
+
+@media screen and (max-width:500px) {
+    #containerFetchComponent {
+        display: block;
+    }
+    #sectionFectComponent {
+        width: 100%;
+    }
+    .inputFechComponent {
+        width: 70%;
+    }
+    .sectcion2Fetcomponet {
+        background-color: #100E1D;
+        padding-bottom: 50px;
+    }
+    .divContSections {
+        margin: 0px;
+    }
+
+    .containerSectionEstado {
+        display: flex !important;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .containerSectionEstado > div {
+        width: 150px;
+    }
+    .containerSectionEstado > div > h3 {
+        font-size: 2rem;
+    }
+    .containerSectionEstado:nth-child(2) > div > .humidity-bar > div > span {
+        font-size: .7rem;
+    } 
+    .containerSectionEstado > div > h3 > span{
+        font-size: 1.4rem;
+    }
+}
+
+/* barra de progreso, estilos */
+.humidity-bar {
+    width: 70%;
+    border-radius: 30px;
+    height: 5px;
+    background-color: #ffffff;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    border-radius: 30px;
+    background-color: #FFEC65; /* Color de la barra de progreso */
+    width: 0; /* Inicialmente la barra está vacía */
+    transition: width 1s; /* Agrega una transición para que la animación sea suave */
+  }
+  

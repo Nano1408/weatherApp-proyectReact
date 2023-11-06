@@ -2,8 +2,10 @@ import axios from 'axios';
 
 export async function getGeolocation() {
   return new Promise((resolve, reject) => {
+    
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
+        
         async (position) => {
           const apiKey = '7a6e9bffe5784cae81ec5d4c82e23a81';
           const { latitude, longitude } = position.coords;

@@ -16,8 +16,9 @@ const fetchWeather = async () => {
 		
 		if (result.weather && result.weather.length > 0) {
             // Agrega la URL del icono al objeto de respuesta
-            result.iconUrl = `https://openweathermap.org/img/wn/${result.weather[0].icon}@4x.png`;
+            result.iconUrl = `https://openweathermap.org/img/wn/${result.weather[0].icon}@2x.png`;
         }
+
 		return result
 
 	} catch (error) {
