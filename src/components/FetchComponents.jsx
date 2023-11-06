@@ -131,14 +131,14 @@ const FetchComponents = () => {
                 <strong className="text-6xl text-white">{weatherData.main.temp.toFixed()}</strong>
                 <span className="text-2xl font-semibold text-white"> °C</span>
               </p>
-              <p className="my-4 text-3xl font-medium text-white">{weatherData.description}</p>
+              <p className="my-4 text-3xl font-medium text-white">{weatherData.weather[0].description}</p>
             </div>
           </div>
         ) : null}
 
         {showNoDataAlert && (
-          <div className="bg-white w-full h-64 justify-center flex flex-col items-center">
-            <p className="text-red-600 font-semibold text-ms">No se encontraron datos para tu busqueda.</p>
+          <div className="bg-[#ffffff11] w-full h-80 justify-center flex flex-col items-center">
+            <p className="text-white font-semibold text-xl">No se encontraron datos para tu busqueda.</p>
             <img 
               src="/found-404-image-removebg.png" 
               alt="found-404"
@@ -195,7 +195,17 @@ const FetchComponents = () => {
       </section>
 
       {/* medidas de viento y demas */}
-      <section className="sectcion2Fetcomponet sectionCalc w-full px-10">
+      {showNoDataAlert ? (
+        <div className="w-full justify-center flex flex-col items-center">
+          <p className="text-white font-semibold text-xl">No se encontraron datos para tu busqueda.</p>
+          <img 
+            src="/found-404-image-removebg.png" 
+            alt="found-404"
+          />
+      </div>
+      ) :
+        (
+          <section className="sectcion2Fetcomponet sectionCalc w-full px-10">
 
         <div className=" text-white w-full flex flex-col items-center">
         <h2 className="text-white text-start text-2xl pt-10 pb-5 -ml-[35%]">lo más destacado de hoy</h2>
@@ -256,6 +266,9 @@ const FetchComponents = () => {
           )}
         </div>
       </section>
+        )
+      }
+
     </div>
       }
 
