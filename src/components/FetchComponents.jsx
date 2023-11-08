@@ -1,51 +1,53 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
+import { useMemo } from "react";
 import DataDay from "./DataDay";
 import fetchWeather from "../helpers/fetchWeather";
+import Pronostics from "./Pronostics";
 import fetchMedellin from "../helpers/fetchMedellin";
 import fetchBogota from "../helpers/fetchBogota";
+import BackgroundWeather from "../helpers/BackgroundWeather";
+import iconsWeather from "../helpers/iconsWeather";
 import { getGeolocation } from "../helpers/getGeolocation";
 import { LuLocateFixed } from "react-icons/lu";
 import { MdLocationOn } from "react-icons/md";
 import { MdOutlineSpeed } from "react-icons/md"
 import { FaLocationDot } from "react-icons/fa6"
 import "../App.css";
-import Pronostics from "./Pronostics";
 
 const FetchComponents = () => {
-  const [buscar, setBuscar] = useState("");
-  const [locationName, setLocationName] = useState("");
   const [weatherData, setWeatherData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoadingInitial, setIsLoadingInitial] = useState(true);
   const [showNoDataAlert, setShowNoDataAlert] = useState(false);
-  const [locationPermissionDenied, setLocationPermissionDenied] = useState(false);
+  const [locationName, setLocationName] = useState("");
+  const [search, setSearch] = useState({ buscar: "", backgroundImage: null, });
+  const [loadingAndLocation, setLoadingAndLocation] = useState({ isLoading: false, isLoadingInitial: true, showNoDataAlert: false, locationPermissionDenied: false, })
   const [humidity, setHumidity] = useState(0);
 
   const handleEnterKey = (e) => {
     if (e.key === "Enter") {
-      getWeatherData(buscar);
-      setBuscar("");
+      getWeatherData(search.buscar);
+      setSearch({...search, buscar:''});
     }
   };
 
   const getWeatherData = (query) => {
-    setIsLoading(true);
-    setIsLoadingInitial(false); //al cargar la pagina desaparece
-    console.log("isLoadingInitial después de setIsLoadingInitial(false):", isLoadingInitial);
+    setLoadingAndLocation((prevState) => ({...prevState, isLoading:true}));
+    setLoadingAndLocation((prevState) => ({...prevState, isLoadingInitial:false})); //al cargar la pagina desaparece
+    console.log("isLoadingInitial después de setIsLoadingInitial(false):", loadingAndLocation.isLoadingInitial);
 
     fetchWeather(query)
       .then((data) => {
+        console.log(data)
         setWeatherData(data);
         setHumidity(data.main.humidity);
         setShowNoDataAlert(false);
-        setIsLoading(false);
-        setIsLoadingInitial(false)
-        console.log(data)
+        setLoadingAndLocation((prevState) => ({...prevState, isLoading:false}));
+        setLoadingAndLocation((prevState) => ({...prevState, isLoadingInitial:false}));
+        // console.log(data)
       })
       .catch((error) => {
         setWeatherData(null);
         setShowNoDataAlert(true);
-        setIsLoading(false);
+        setLoadingAndLocation((prevState) => ({...prevState, isLoading:false}));
         console.error("Error al obtener el clima:", error);
       });
   } ;
@@ -59,11 +61,11 @@ const FetchComponents = () => {
     getGeolocation()
       .then((name) => {
         setLocationName(name);
-        setIsLoadingInitial(false);
+        setLoadingAndLocation((prevState) => ({...prevState, isLoadingInitial:false}));
       })
       .catch((error) => {
-        setIsLoadingInitial(false);
-        setLocationPermissionDenied(true);
+        setLoadingAndLocation((prevState) => ({...prevState, isLoadingInitial:false}));
+        setLoadingAndLocation((prevState) => ({...prevState, locationPermissionDenied:true}));
         console.error(error);
       });
   }, []);
@@ -85,10 +87,32 @@ const FetchComponents = () => {
     getClima(fetchMedellin);
   }, []);
 
+  const iconUrl = useMemo(() => {
+    if (weatherData) {
+      const iconCode = weatherData.weather[0].icon;
+      return BackgroundWeather(iconCode, search.backgroundImage);
+    }
+    return null;
+  }, [weatherData, search.backgroundImage]);
+  
+  useEffect(() => {
+    if (iconUrl) {
+      document.documentElement.style.setProperty('--background-image-url', `url(${iconUrl})`);
+      setSearch({ ...search, backgroundImage: iconUrl });
+    }
+  }, [iconUrl]);
+
+  const iconSrc = useMemo(() => {
+    if (weatherData) {
+      return iconsWeather(weatherData.weather[0].icon);
+    }
+    return null;
+  }, [weatherData]);
+
   return (
     <div className="w-full flex h-screen" id="containerFetchComponent">
-      <section 
-        id="sectionFectComponent"
+      <section id="sectionFectComponent"
+        // style={backgroundImageURL}
         className="container-search w-[30rem] text-center h-screen flex flex-col items-center justify-center"
       >
         <div className="w-full py-5 flex justify-evenly items-center">
@@ -97,16 +121,16 @@ const FetchComponents = () => {
             name="wheather"
             placeholder="Buscar..."
             id="weather"
-            value={buscar}
+            value={search.buscar}
             className="inputFechComponent border-2 rounded-md py-2 pl-2"
             onKeyDown={handleEnterKey}
-            onChange={(e) => setBuscar(e.target.value)}
+            onChange={(e) => setSearch({buscar:e.target.value})}
           />
           <button
             className="bg-white rounded-full ml-2 w-10 h-10 flex justify-center items-center"
             onClick={() => {
-              getWeatherData(buscar);
-              setBuscar("");
+              getWeatherData(search.buscar);
+              setSearch({...search, buscar:''});
             }}
           >
             {" "}
@@ -114,17 +138,18 @@ const FetchComponents = () => {
           </button>
         </div>
 
-        {isLoadingInitial && (
+        {loadingAndLocation.isLoadingInitial && (
           <span className="loader"></span>
         )}
 
-        {isLoading ? (
+        {loadingAndLocation.isLoading ? (
           <span className="loader"></span>
         ) : weatherData ? (
           <div className="flex flex-col">
             <h2 className="text-4xl font-bold text-white">{weatherData.name}</h2>
             <div className="flex justify-center">
-              <img src={weatherData.iconUrl} alt="icon_weather" className="w-60 h-60" />
+              <img src={iconSrc} alt="icon_weather" className="w-60 h-60" />
+              {/* <img src={iconsWeather} alt="" /> */}
             </div>
             <div>
               <p>
@@ -161,9 +186,10 @@ const FetchComponents = () => {
           </button>
         </div>
 
+        {/* component de fecha */}
         <DataDay />
 
-        {isLoadingInitial ? (
+        {loadingAndLocation.isLoadingInitial ? (
           <FaLocationDot className="icon-with-bounce-animation text-red-600 w-6 h-6 my-3"/>
         ) : locationName ? (
           <div className="flex">
@@ -177,22 +203,22 @@ const FetchComponents = () => {
       </section>
 
       {/* datos de pronostico al cargar */}
-      {isLoadingInitial ? (
+      {loadingAndLocation.isLoadingInitial ? (
         <div className="w-full flex justify-center">
           <span className="loader loader-calc mt-10"></span>
         </div>
       ) :
-      <div className="divContSections w-full min-h-screen overflow-y-auto bg-[#100E1D]">
+      <section className="divContSections w-full min-h-screen overflow-y-auto bg-[#100E1D]">
 
-      {/* pronostico */}
-      <section className="sectcion2Fetcomponet w-full flex flex-col items-center">
-        <Pronostics />
-        {locationPermissionDenied && (
-          <p className="font-semibold text-sm text-lime-600">
-            Activa la ubicación para mostrar el pronostico del clima.
-          </p>
-        )}
-      </section>
+        {/* pronostico */}
+        <section className="sectcion2Fetcomponet w-full flex flex-col items-center">
+          <Pronostics />
+          {loadingAndLocation.locationPermissionDenied && (
+            <p className="font-semibold text-sm text-lime-600">
+              Activa la ubicación para mostrar el pronostico del clima.
+            </p>
+          )}
+        </section>
 
       {/* medidas de viento y demas */}
       {showNoDataAlert ? (
@@ -205,12 +231,12 @@ const FetchComponents = () => {
       </div>
       ) :
         (
-          <section className="sectcion2Fetcomponet sectionCalc w-full px-10">
+        <section className="sectcion2Fetcomponet sectionCalc w-full px-10">
 
-        <div className=" text-white w-full flex flex-col items-center">
-        <h2 className="text-white text-start text-2xl pt-10 pb-5 -ml-[35%]">lo más destacado de hoy</h2>
-          {weatherData && (
-            <section className="containerSectionEstado grid grid-cols-2 gap-10">
+          <div className=" text-white w-full flex flex-col items-center">
+            <h2 className="text-white text-start text-2xl pt-10 pb-5 -ml-[35%]">lo más destacado de hoy</h2>
+            {weatherData && (
+              <section className="containerSectionEstado grid grid-cols-2 gap-10">
 
               {/* viento */}
               <div className="bg-[#1E213A] w-[300px] h-[13rem] mb-5 flex flex-col justify-between items-center py-4">
@@ -269,7 +295,7 @@ const FetchComponents = () => {
         )
       }
 
-    </div>
+    </section>
       }
 
     </div>

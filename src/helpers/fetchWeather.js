@@ -19,6 +19,8 @@ const fetchWeather = async () => {
             result.iconUrl = `https://openweathermap.org/img/wn/${result.weather[0].icon}@2x.png`;
         }
 
+		
+
 		return result
 
 	} catch (error) {
