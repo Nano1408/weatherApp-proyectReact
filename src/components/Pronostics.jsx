@@ -260,7 +260,7 @@ const Pronostics = () => {
             </div>
           </div>
         ) : 
-        <div className="w-full flex flex-col justify-center items-center">
+        <div className="w-full flex flex-col justify-center items-center mb-10">
           <div className="flex justify-center items-center">
             <p className="text-white text-xl">Datos no encontrados, lo siento.</p>
             <img
@@ -270,8 +270,8 @@ const Pronostics = () => {
           />
           </div>
           <img
-            className="w[300px] h-[300px] -mt-5 -ml-5"
-            src="/icons/404-error.gif" 
+            className="w[200px] h-[200px] -mt-5 -ml-5"
+            src="icons/404-error.gif" 
             alt="error.svg" 
           />
         </div>
