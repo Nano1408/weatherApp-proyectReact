@@ -72,7 +72,7 @@ body {
 .progress-bar {
     height: 100%;
     border-radius: 30px;
-    background-color: #FFEC65; /* Color de la barra de progreso */
+    background-color: #d58606; /* Color de la barra de progreso */
     width: 0; /* Inicialmente la barra está vacía */
     transition: width 1s; /* Agrega una transición para que la animación sea suave */
 }
@@ -125,6 +125,14 @@ body {
     animation: bounce 1.2s infinite;
 }
 
+@keyframes trow {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-5px); }
+}
+
+.code-red-animation {
+    animation: trow 1.2s infinite;
+}
 
 /* media query */
 @media screen and (max-width:980px) {

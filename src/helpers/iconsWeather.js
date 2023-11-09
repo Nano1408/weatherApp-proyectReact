@@ -5,27 +5,27 @@ const iconsWeather = (icon) => {
     try{
         const iconMap = {
             //dia
-            '01d': './public/icons/clear-day.svg',
-            '02d': '/public/icons/cloudy.svg',
-            '03d': '/public/icons/partly-cloudy-day.svg',
-            '04d': '/public/icons/overcast-day.svg',
-            '09d': '/public/icons/rain.svg',
-            '10d': '/public/icons/drizzle.svg',
-            '11d': 'public/icons/thunderstorms.svg',
-            '13d': '/public/icons/partly-cloudy-day-snow.svg',
-            '50d': '/public/icons/mist.svg',
+            '01d': '/icons/01d.svg',
+            '02d': '/icons/02d.svg',
+            '03d': '/icons/03d.svg',
+            '04d': '/icons/04d.svg',
+            '09d': '/icons/09d.svg',
+            '10d': '/icons/10d.svg',
+            '11d': '/icons/11d.svg',
+            '13d': '/icons/13d.svg',
+            '50d': '/icons/50d.svg',
             //noche
-            '01n': '/public/icons/clear-night.svg',
-            '02n': '/public/icons/partly-cloudy-night.svg',
-            '03n': '/public/icons/partly-cloudy-night.svg',
-            '04n': '/public/icons/overcast.svg',
-            '09n': '/public/icons/partly-cloudy-night-rain.svg',
-            '10n': '/public/icons/drizzle.svg',
-            '11n': '/public/icons/thunderstorms-night.svg',
-            '13n': '/public/icons/partly-cloudy-night-snow.svg',
-            '50n': '/public/icons/mist.svg',   
+            '01n': '/icons/01n.svg',
+            '02n': '/icons/02n.svg',
+            '03n': '/icons/03n.svg',
+            '04n': '/icons/04n.svg',
+            '09n': '/icons/09n.svg',
+            '10n': '/icons/10n.svg',
+            '11n': '/icons/11n.svg',
+            '13n': '/icons/13n.svg',
+            '50n': '/icons/50n.svg',  
         }
-        console.log(icon)
+        // console.log(icon)
         return iconMap[icon];
     }catch(error){
         console.log(error)
