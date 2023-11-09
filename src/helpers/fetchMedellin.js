@@ -8,7 +8,7 @@ const fetchMedellin = async () => {
         const result = await res.json();
 
         if(result.weather && result.weather.length > 0){
-            result.iconUrlMedellin = `https://openweathermap.org/img/wn/${result.weather[0].icon}.png`;
+            result.iconUrl = `https://openweathermap.org/img/wn/${result.weather[0].icon}@4x.png`;
         }
     return result
     }catch(error){

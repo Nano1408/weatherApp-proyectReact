@@ -6,7 +6,7 @@ function App() {
   // const [count, setCount] = useState(0)
 
   return (
-    <div className='w-full text-end pr-10 mt-10'>
+    <div className='w-full '>
       <FetchComponents />
     </div>
   )

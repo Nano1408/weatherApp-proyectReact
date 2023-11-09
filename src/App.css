@@ -1,13 +1,219 @@
-.scattered-clouds-dia {
-    background-image: url('https://img.freepik.com/foto-gratis/hojas-verdes-sol_1127-3826.jpg?size=626&ext=jpg&ga=GA1.2.1413851642.1693077997&semt=ais');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+body {
+    position: relative;
 }
 
-/* .default-background {
-    background-image: url('https://img.freepik.com/foto-gratis/hojas-verdes-sol_1127-3826.jpg?size=626&ext=jpg&ga=GA1.2.1413851642.1693077997&semt=ais');
+:root {
+    --background-image-url: 'URL_de_imagen_predeterminada.jpg'; /* Establece una imagen predeterminada */
+  }
+
+#sectionFectComponent {
+    position: relative;
+    transition: 500ms;
+  }
+  
+  #sectionFectComponent::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--background-image-url);
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    filter: blur(3px);
+    transition: 500ms;
+    z-index: -1;
+  }
+
+/* body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #100E1D;
+    background-position: top;
     background-size: cover;
+    filter: blur(3px);
+    z-index: -1;
 } */
+
+.container-search {
+    position: relative;
+}
+
+.container-search::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #1E213A;
+    background-image: url("/public/nubes.png");
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size:contain;
+    filter: blur(2px);
+    z-index: -1;
+}
+
+/* barra de progreso, estilos */
+.humidity-bar {
+    width: 70%;
+    border-radius: 30px;
+    height: 5px;
+    background-color: #ffffff;
+}
+
+.progress-bar {
+    height: 100%;
+    border-radius: 30px;
+    background-color: #d58606; /* Color de la barra de progreso */
+    width: 0; /* Inicialmente la barra está vacía */
+    transition: width 1s; /* Agrega una transición para que la animación sea suave */
+}
+
+/* styles de loading initials */
+.loader {
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    position: relative;
+}
+.loader::after,
+.loader::before {
+    content: '';  
+    box-sizing: border-box;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    position: absolute;
+    left: 0;
+    top: 0;
+    animation: animloader 2s linear infinite;
+}
+.loader-calc::after, .loader-calc::before {
+    border: 2px solid #f80909 !important;
+}
+.loader::after {
+    animation-delay: 1s;
+}
+
+@keyframes animloader {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+/* Define la animación para icono ubicacion en caso denegado*/
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+/* Aplica la animación al icono */
+.icon-with-bounce-animation {
+    animation: bounce 1.2s infinite;
+}
+
+@keyframes trow {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-5px); }
+}
+
+.code-red-animation {
+    animation: trow 1.2s infinite;
+}
+
+/* media query */
+@media screen and (max-width:980px) {
+    .containerSectionEstado > div {
+        width: 200px;
+    }
+    .containerSectionEstado > div > h3 {
+        font-size: 2rem;
+    }
+    .containerSectionEstado > div > h3 > span{
+        font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .sectionCalc > div > h2 {
+        margin-left: 0;
+    }
+    
+    .containerSectionEstado {
+        grid-template-columns: repeat(1, 1fr) !important;
+    }
+    .containerSectionEstado > div {
+        width: 300px;
+    }
+    .containerSectionEstado > div > h3 {
+        font-size: 3.3rem;
+    }
+    .containerSectionEstado > div > h3 > span{
+        font-size: 2.5rem;
+    }
+}
+
+@media screen and (max-width:500px) {
+    #containerFetchComponent {
+        display: block;
+    }
+    #sectionFectComponent {
+        width: 100%;
+    }
+    .inputFechComponent {
+        width: 70%;
+    }
+    .sectcion2Fetcomponet {
+        background-color: #100E1D;
+        padding-bottom: 50px;
+    }
+    .divContSections {
+        margin: 0px;
+    }
+
+    .containerSectionEstado {
+        display: flex !important;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .containerSectionEstado > div {
+        width: 150px;
+    }
+    .containerSectionEstado > div > h3 {
+        font-size: 2rem;
+    }
+    .containerSectionEstado:nth-child(2) > div > .humidity-bar > div > span {
+        font-size: .7rem;
+    } 
+    .containerSectionEstado > div > h3 > span{
+        font-size: 1.4rem;
+    }
+}
+
+@media screen and (max-width:420px) {
+    .containerSectionEstado > div {
+        width: 100%;
+    }
+    .containerSectionEstado:nth-child(2) > div > .humidity-bar > div > span {
+        font-size: 1rem;
+    }
+    .containerSectionEstado > div > h3 {
+        font-size: 3.3em;
+    }
+    .containerSectionEstado > div > h3 > span{
+        font-size: 2.5rem;
+    }
+}
