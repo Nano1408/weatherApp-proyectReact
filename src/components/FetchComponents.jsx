@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import DataDay from "./DataDay";
 import fetchWeather from "../helpers/fetchWeather";
 import Pronostics from "./Pronostics";
@@ -9,8 +8,7 @@ import BackgroundWeather from "../helpers/BackgroundWeather";
 import iconsWeather from "../helpers/iconsWeather";
 import { getGeolocation } from "../helpers/getGeolocation";
 import { LuLocateFixed } from "react-icons/lu";
-import { MdLocationOn } from "react-icons/md";
-import { MdOutlineSpeed } from "react-icons/md"
+import { MdLocationOn, MdOutlineSpeed } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6"
 import "../App.css";
 
@@ -36,7 +34,7 @@ const FetchComponents = () => {
 
     fetchWeather(query)
       .then((data) => {
-        console.log(data)
+        // console.log(data)
         setWeatherData(data);
         setHumidity(data.main.humidity);
         setShowNoDataAlert(false);
@@ -119,9 +117,9 @@ const FetchComponents = () => {
           <input
             type="text"
             name="wheather"
-            placeholder="Buscar..."
+            placeholder="Buscar ciudad..."
             id="weather"
-            value={search.buscar}
+            value={search.buscar.trim()}
             className="inputFechComponent border-2 rounded-md py-2 pl-2"
             onKeyDown={handleEnterKey}
             onChange={(e) => setSearch({buscar:e.target.value})}
@@ -129,7 +127,7 @@ const FetchComponents = () => {
           <button
             className="bg-white rounded-full ml-2 w-10 h-10 flex justify-center items-center"
             onClick={() => {
-              getWeatherData(search.buscar);
+              getWeatherData(search.buscar.trim());
               setSearch({...search, buscar:''});
             }}
           >

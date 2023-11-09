@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import fetchPronostic from "../helpers/fetchPronostic";
+import iconsWeather from "../helpers/iconsWeather";
 import { FaSearchLocation } from "react-icons/fa";
 import { FaLocationPinLock } from "react-icons/fa6";
 
@@ -12,13 +13,20 @@ const Pronostics = () => {
   const obtenerPronostico = async () => {
     try {
       const pronostico = await fetchPronostic();
-      console.log("Pronóstico actualizado:", pronostico);
+      // console.log("Pronóstico actualizado:", pronostico);
       setForecastData(pronostico);
       setLoading(false);
     } catch (error) {
       console.error("Error al actualizar el pronóstico:", error);
     }
   };
+
+  const iconSrc = useMemo(() => {
+    if (forecastData) {
+      return forecastData.list[0].weather[0].icon;
+    }
+    return null;
+  }, [forecastData]);
 
   // Función para obtener el pronóstico del día siguiente
   const pronosticIndex = (index) => {
@@ -87,7 +95,7 @@ const Pronostics = () => {
   const actualizarPronostico = async (cityName) => {
     try {
       const pronostico = await fetchPronostic(cityName);
-      console.log("Pronóstico actualizado para", cityName, ":", pronostico);
+      // console.log("Pronóstico actualizado para", cityName, ":", pronostico);
       setForecastData(pronostico);
       setLoading(false);
     } catch (error) {
@@ -119,6 +127,7 @@ const Pronostics = () => {
     }
   };
 
+
   return (
     <div className="w-full">
       <div className="w-full flex justify-center mt-10">
@@ -127,7 +136,7 @@ const Pronostics = () => {
           name="forecast"
           placeholder="Buscar pronostico..."
           id="forecast"
-          value={buscar}
+          value={buscar.trim()}
           className="border-2 rounded-md py-2 pl-2 mr-5 w-1/2"
           onKeyDown={handleEnterKey}
           onChange={handleInputChange}
@@ -162,8 +171,9 @@ const Pronostics = () => {
               </h3>
               <p className="font-semibold text-xs tex">8 horas</p>
               <img
-                src={`https://openweathermap.org/img/wn/${forecastData.list[1].weather[0].icon}@2x.png`}
+                src={iconSrc ? iconsWeather(forecastData.list[1].weather[0].icon) : null}
                 alt="Icono del tiempo"
+                className="w-[100px] h-[100px]"
               />
               <h2 className="font-bold text-gray-400">
                 {forecastData.list[1].weather[0].description}
@@ -185,8 +195,9 @@ const Pronostics = () => {
               </h3>
               <p className="font-semibold text-xs tex">Mañana</p>
               <img
-                src={`https://openweathermap.org/img/wn/${forecastData.list[8].weather[0].icon}@2x.png`}
+                src={iconSrc ? iconsWeather(forecastData.list[8].weather[0].icon) : null}
                 alt="Icono del tiempo"
+                className="w-[100px] h-[100px]"
               />
               <h2 className="font-bold text-gray-400">
                 {forecastData.list[8].weather[0].description}
@@ -208,8 +219,9 @@ const Pronostics = () => {
               </h3>
               <p className="font-semibold text-xs tex">2 días</p>
               <img
-                src={`https://openweathermap.org/img/wn/${forecastData.list[16].weather[0].icon}@2x.png`}
+                src={iconSrc ? iconsWeather(forecastData.list[16].weather[0].icon) : null}
                 alt="Icono del tiempo"
+                className="w-[100px] h-[100px]"
               />
               <h2 className="font-bold text-gray-400">
                 {forecastData.list[16].weather[0].description}
@@ -231,8 +243,9 @@ const Pronostics = () => {
               </h3>
               <p className="font-semibold text-xs tex">3 días</p>
               <img
-                src={`https://openweathermap.org/img/wn/${forecastData.list[24].weather[0].icon}@2x.png`}
+                src={iconSrc ? iconsWeather(forecastData.list[24].weather[0].icon) : null}
                 alt="Icono del tiempo"
+                className="w-[100px] h-[100px]"
               />
               <h2 className="font-bold text-gray-400">
                 {forecastData.list[24].weather[0].description}

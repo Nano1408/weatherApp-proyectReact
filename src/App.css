@@ -72,7 +72,7 @@ body {
 .progress-bar {
     height: 100%;
     border-radius: 30px;
-    background-color: #FFEC65; /* Color de la barra de progreso */
+    background-color: #d58606; /* Color de la barra de progreso */
     width: 0; /* Inicialmente la barra está vacía */
     transition: width 1s; /* Agrega una transición para que la animación sea suave */
 }
