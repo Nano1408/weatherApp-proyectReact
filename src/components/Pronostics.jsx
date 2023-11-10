@@ -108,8 +108,14 @@ const Pronostics = () => {
         setLoading(false);
         console.error("Error al actualizar el pronóstico:", error);
       }
-   
   };
+}
+
+const submit = () => {
+  if(actualizarPronostico){
+    actualizarPronostico(buscar);
+    setLoading(true);
+  }
 }
 
 
@@ -123,14 +129,10 @@ const Pronostics = () => {
           id="forecast"
           className="border-2 rounded-md py-2 pl-2 mr-5 w-1/2"
           onKeyUp={handleEnterKey}
-          // onKeyDown={setBuscar("")}
         />
 
         <button
-          onClick={() => {
-            actualizarPronostico(buscar);
-            setLoading(true);
-          }}
+          onClick={submit}
           className="text-white flex justify-center items-center"
         >
           <FaSearchLocation className="w-7 h-7 hover:text-red-600 hover:scale-110 hover:duration-300 duration-300" />

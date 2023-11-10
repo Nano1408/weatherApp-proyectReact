@@ -110,6 +110,13 @@ const FetchComponents = () => {
       }
     }
   };
+
+  const submit = () => {
+    if(getWeatherData){
+      getWeatherData(search.buscar)
+      setSearch({...search, buscar:''})
+    }
+  }
   
 
   return (
@@ -129,10 +136,7 @@ const FetchComponents = () => {
           />
           <button
             className="bg-white rounded-full ml-2 w-10 h-10 flex justify-center items-center"
-            onClick={() => {
-              getWeatherData(search.buscar);
-              setSearch({...search, buscar:''});
-            }}
+            onClick={submit}
           >
             {" "}
             <LuLocateFixed className="w-8 h-8 text-black p-1" />
