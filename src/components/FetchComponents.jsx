@@ -20,13 +20,6 @@ const FetchComponents = () => {
   const [loadingAndLocation, setLoadingAndLocation] = useState({ isLoading: false, isLoadingInitial: true, showNoDataAlert: false, locationPermissionDenied: false, })
   const [humidity, setHumidity] = useState(0);
 
-  const handleEnterKey = (e) => {
-    if (e.key === "Enter") {
-      getWeatherData(search.buscar);
-      setSearch({...search, buscar:''});
-    }
-  };
-
   const getWeatherData = (query) => {
     setLoadingAndLocation((prevState) => ({...prevState, isLoading:true}));
     setLoadingAndLocation((prevState) => ({...prevState, isLoadingInitial:false})); //al cargar la pagina desaparece
@@ -49,11 +42,6 @@ const FetchComponents = () => {
         console.error("Error al obtener el clima:", error);
       });
   } ;
-
-  const calculateProgressBarWidth = (humidity) => {
-    const maxWidth = 100; // Ancho máximo de la barra
-    return humidity > 100 ? maxWidth : humidity;
-  };
 
   useEffect(() => {
     getGeolocation()
@@ -107,6 +95,23 @@ const FetchComponents = () => {
     return null;
   }, [weatherData]);
 
+  // console.log(iconSrc)
+
+  const handleEnterKey = async (e) => {
+    if (e.key === "Enter") {
+      const newSearch = { ...search, buscar: e.target.value };
+      setSearch(newSearch);
+      
+      try {
+        await getWeatherData(newSearch.buscar);
+        setSearch({});
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  };
+  
+
   return (
     <div className="w-full flex h-screen" id="containerFetchComponent">
       <section id="sectionFectComponent"
@@ -119,15 +124,13 @@ const FetchComponents = () => {
             name="wheather"
             placeholder="Buscar ciudad..."
             id="weather"
-            value={search.buscar.trim()}
             className="inputFechComponent border-2 rounded-md py-2 pl-2"
-            onKeyDown={handleEnterKey}
-            onChange={(e) => setSearch({buscar:e.target.value})}
+            onKeyUp={handleEnterKey}
           />
           <button
             className="bg-white rounded-full ml-2 w-10 h-10 flex justify-center items-center"
             onClick={() => {
-              getWeatherData(search.buscar.trim());
+              getWeatherData(search.buscar);
               setSearch({...search, buscar:''});
             }}
           >
@@ -163,7 +166,7 @@ const FetchComponents = () => {
           <div className="bg-[#ffffff11] w-full h-80 justify-center flex flex-col items-center">
             <p className="text-green-50 font-semibold text-xl -mb-14">No se encontraron datos para tu busqueda.</p>
             <img 
-              src="/icons/404-error.gif" 
+              src="icons/404-error.gif" 
               alt="found-404"
             />
           </div>
@@ -223,7 +226,7 @@ const FetchComponents = () => {
         <div className="w-full justify-center flex flex-col items-center">
           <p className="text-white font-semibold text-xl mt-10">No se encontraron datos para tu busqueda.</p>
           <img 
-            src="/icons/404-error.gif" 
+            src="icons/404-error.gif" 
             alt="found-404"
           />
       </div>

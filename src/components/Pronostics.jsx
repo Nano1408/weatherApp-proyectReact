@@ -6,14 +6,14 @@ import { FaLocationPinLock } from "react-icons/fa6";
 
 const Pronostics = () => {
   const [forecastData, setForecastData] = useState(null);
-  const [buscar, setBuscar] = useState("");
+  const [buscar, setBuscar] = useState('');
   const [loading, setLoading] = useState(true);
 
   // Función para obtener el pronóstico y actualizar el estado
   const obtenerPronostico = async () => {
     try {
       const pronostico = await fetchPronostic();
-      // console.log("Pronóstico actualizado:", pronostico);
+      console.log("Pronóstico actualizado:", pronostico);
       setForecastData(pronostico);
       setLoading(false);
     } catch (error) {
@@ -22,30 +22,12 @@ const Pronostics = () => {
     }
   };
 
-  const iconSrc = useMemo(() => {
+  const iconForecast = useMemo(() => {
     if (forecastData) {
       return forecastData.list[0].weather[0].icon;
     }
     return null;
   }, [forecastData]);
-
-  // Función para obtener el pronóstico del día siguiente
-  const pronosticIndex = (index) => {
-    if (forecastData && forecastData.list.length >= index) {
-      const pronostico = forecastData.list[index];
-      const datePronostic = pronostico.dt_txt;
-      return {
-        // datePronostic: pronostico.dt_txt,
-        datePronostic: datePronostic,
-        tempMin: pronostico.main.temp_min.toFixed(),
-        tempMax: pronostico.main.temp_max.toFixed(1),
-        description: pronostico.weather[0].description,
-        name: forecastData.city.name,
-        icono: pronostico.weather[0].icon,
-      };
-    }
-    return "no fue posible traer los datos de forecast", null;
-  };
 
   const obtenerFechaFormateada = (fecha) => {
     if (!fecha) {
@@ -63,7 +45,7 @@ const Pronostics = () => {
     // const hora = fechaDate.getHours();
     // const minuto = fechaDate.getMinutes();
 
-    return `${dias}, ${mes} ${dia}`;
+    return `${dias}, ${dia} ${mes}`;
   };
 
   // Función para obtener el nombre del mes
@@ -96,17 +78,13 @@ const Pronostics = () => {
   const actualizarPronostico = async (cityName) => {
     try {
       const pronostico = await fetchPronostic(cityName);
-      // console.log("Pronóstico actualizado para", cityName, ":", pronostico);
+      console.log("Pronóstico actualizado para", cityName, ":", pronostico);
       setForecastData(pronostico);
       setLoading(false);
     } catch (error) {
       setLoading(false)
-      console.error(
-        "Error al actualizar el pronóstico para", cityName,
-        ":",
-        error
-      );
       setForecastData(null)
+      console.error("Error al actualizar el pronóstico para", cityName,":", error);
     }
   };
 
@@ -117,18 +95,22 @@ const Pronostics = () => {
       setLoading(false);
     }
   }, [forecastData]);
-
   
-  const handleInputChange = (e) => {
-    setBuscar(e.target.value);
-  };
-  
-  const handleEnterKey = (e) => {
+  const handleEnterKey = async (e) => {
     if (e.key === "Enter") {
-      actualizarPronostico(buscar);
       setLoading(true);
-    }
+      setBuscar(e.target.value);
+      
+      try {
+        await actualizarPronostico(buscar);
+        setBuscar("");
+      } catch (error) {
+        setLoading(false);
+        console.error("Error al actualizar el pronóstico:", error);
+      }
+   
   };
+}
 
 
   return (
@@ -139,10 +121,9 @@ const Pronostics = () => {
           name="forecast"
           placeholder="Buscar pronostico..."
           id="forecast"
-          value={buscar.trim()}
           className="border-2 rounded-md py-2 pl-2 mr-5 w-1/2"
-          onKeyDown={handleEnterKey}
-          onChange={handleInputChange}
+          onKeyUp={handleEnterKey}
+          // onKeyDown={setBuscar("")}
         />
 
         <button
@@ -172,7 +153,7 @@ const Pronostics = () => {
               </h3>
               <p className="font-semibold text-xs tex">8 horas</p>
               <img
-                src={iconSrc ? iconsWeather(forecastData.list[1].weather[0].icon) : null}
+                src={iconForecast ? iconsWeather(forecastData.list[1].weather[0].icon) : null}
                 alt="Icono del tiempo"
                 className="w-[100px] h-[100px]"
               />
@@ -196,7 +177,7 @@ const Pronostics = () => {
               </h3>
               <p className="font-semibold text-xs tex">Mañana</p>
               <img
-                src={iconSrc ? iconsWeather(forecastData.list[8].weather[0].icon) : null}
+                src={iconForecast ? iconsWeather(forecastData.list[8].weather[0].icon) : null}
                 alt="Icono del tiempo"
                 className="w-[100px] h-[100px]"
               />
@@ -220,7 +201,7 @@ const Pronostics = () => {
               </h3>
               <p className="font-semibold text-xs tex">2 días</p>
               <img
-                src={iconSrc ? iconsWeather(forecastData.list[16].weather[0].icon) : null}
+                src={iconForecast ? iconsWeather(forecastData.list[16].weather[0].icon) : null}
                 alt="Icono del tiempo"
                 className="w-[100px] h-[100px]"
               />
@@ -244,7 +225,7 @@ const Pronostics = () => {
               </h3>
               <p className="font-semibold text-xs tex">3 días</p>
               <img
-                src={iconSrc ? iconsWeather(forecastData.list[24].weather[0].icon) : null}
+                src={iconForecast ? iconsWeather(forecastData.list[24].weather[0].icon) : null}
                 alt="Icono del tiempo"
                 className="w-[100px] h-[100px]"
               />
