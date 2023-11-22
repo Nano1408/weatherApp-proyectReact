@@ -105,6 +105,7 @@ const Pronostics = () => {
         await actualizarPronostico(buscar);
         setBuscar("");
       } catch (error) {
+        setBuscar("");
         setLoading(false);
         console.error("Error al actualizar el pronóstico:", error);
       }

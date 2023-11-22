@@ -134,6 +134,25 @@ body {
     animation: trow 1.2s infinite;
 }
 
+/* animacion para los select de paises, estados y ciudades */
+.select-with-transition {
+    height: 30px;
+    outline: none;
+    border-radius: 8px;
+    background-color: #1E213A;
+    color: #ffffff;
+    padding: 0 10px;
+    transform: translateX(0);
+    opacity: 1;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+  }
+  
+  .select-visible {
+    transform: translateX(-100%);
+    opacity: 0;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+  }
+
 /* media query */
 @media screen and (max-width:980px) {
     .containerSectionEstado > div {

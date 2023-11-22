@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import DataDay from "./DataDay";
+import CountrieOption from "./CountrieOption";
 import fetchWeather from "../helpers/fetchWeather";
 import Pronostics from "./Pronostics";
 import fetchMedellin from "../helpers/fetchMedellin";
@@ -122,8 +123,7 @@ const FetchComponents = () => {
   return (
     <div className="w-full flex h-screen" id="containerFetchComponent">
       <section id="sectionFectComponent"
-        // style={backgroundImageURL}
-        className="container-search w-[30rem] text-center h-screen flex flex-col items-center justify-center"
+        className="container-search overflow-y-auto w-[30rem] text-center h-screen flex flex-col items-center justify-center"
       >
         <div className="w-full py-5 flex justify-evenly items-center">
           <input
@@ -147,13 +147,15 @@ const FetchComponents = () => {
           <span className="loader"></span>
         )}
 
+        <CountrieOption />
+
         {loadingAndLocation.isLoading ? (
           <span className="loader"></span>
         ) : weatherData ? (
           <div className="flex flex-col">
             <h2 className="text-4xl font-bold text-white">{weatherData.name}</h2>
             <div className="flex justify-center">
-              <img src={iconSrc} alt="icon_weather" className="w-60 h-60" />
+              <img src={iconSrc} alt="icon_weather" className="w-60 h-60 -mb-7" />
               {/* <img src={iconsWeather} alt="" /> */}
             </div>
             <div>
@@ -198,7 +200,7 @@ const FetchComponents = () => {
           <FaLocationDot className="icon-with-bounce-animation text-red-600 w-6 h-6 my-3"/>
         ) : locationName ? (
           <div className="flex">
-            <h2 className="text-white text-lg flex items-center">
+            <h2 className="text-white text-lg flex items-center pb-2">
               <MdLocationOn className="text-red-500" />
               {locationName}
             </h2>
