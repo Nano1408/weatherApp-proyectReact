@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+/* import { useState, useEffect } from "react";
 import { fetchCountries, fetchState, fecthCities } from "../api/api.js";
 import { fetchAccesToken } from "../api/auth";
 import { BiReset } from "react-icons/bi"
@@ -13,6 +13,10 @@ const CountrieOption = () => {
     const [auth_token, setAuth_token] = useState(null);
     const [show, setShow] = useState('countries')
 
+    console.log(countries)
+    console.log(selectedCountry)
+    console.log(selectedState)
+    console.log(selectedCity)
     useEffect(() => {
         fetchAccesToken()
             .then((token) => {
@@ -58,13 +62,103 @@ const CountrieOption = () => {
                 console.error("Error fetching cities:", error);
             });
     };
+    const handleCityChange = (e) => {
+        const selectedCityValue = e.target.value;
+        setShow("cities");
+        setSelectedCity(selectedCityValue)
+        console.log(selectedCity)
+    };
+
 
     const handleReset = () => {
         setSelectedCountry("");
         setSelectedState("");
         setSelectedCity("");
         setShow("countries");
-    };
+    }; */
+
+    import { useState, useEffect, useMemo } from "react";
+import { fetchCountries, fetchState, fecthCities } from "../api/api.js";
+import { fetchAccesToken } from "../api/auth";
+import { BiReset } from "react-icons/bi";
+
+const CountrieOption = () => {
+  const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [states, setStates] = useState([]);
+  const [selectedState, setSelectedState] = useState("");
+  const [cities, setCities] = useState([]);
+  const [selectedCity, setSelectedCity] = useState("");
+  const [auth_token, setAuth_token] = useState(null);
+  const [show, setShow] = useState("countries");
+
+  console.log(countries);
+  console.log(selectedCountry);
+  console.log(selectedState);
+  console.log(selectedCity);
+
+  useEffect(() => {
+    fetchAccesToken()
+      .then((token) => {
+        setAuth_token(token);
+        fetchCountries(token)
+          .then((data) => {
+            setCountries(data);
+          });
+      })
+      .catch((error) => {
+        console.error("Error fetching access token:", error);
+      });
+  }, []);
+
+  const memoizedFetchState = useMemo(() => fetchState, []);
+  const memoizedFetchCities = useMemo(() => fecthCities, []);
+
+  const handleCountryChange = (e) => {
+    const selectedCountryValue = e.target.value;
+    setSelectedCountry(selectedCountryValue);
+    setShow("states");
+
+    memoizedFetchState(auth_token, selectedCountryValue)
+      .then((data) => {
+        setStates(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching states:", error);
+      });
+  };
+
+  const handleStateChange = (e) => {
+    const selectedStateValue = e.target.value;
+    setSelectedState(selectedStateValue);
+    setShow("cities");
+
+    memoizedFetchCities(auth_token, selectedStateValue)
+      .then((data) => {
+        setCities(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching cities:", error);
+      });
+  };
+
+  const handleCityChange = (e) => {
+    const selectedCityValue = e.target.value;
+    setSelectedCity(selectedCityValue);
+    setShow("cities");
+  };
+
+  //te implemente el usememo porque te estaba renderizando muchisimas veces el componente
+  //como ya tienes los valores de las 3 cosas pais, estado, ciudad...ya puedes hacer el fetch
+  //https://api.openweathermap.org/data/2.5/weather?q={city name},{state code},{country code}&appid={API key}
+  //la cosa es que necesitas tener los codigos de los estados y los paises, en los paises te llega como country_short_name
+
+  const handleReset = () => {
+    setSelectedCountry("");
+    setSelectedState("");
+    setSelectedCity("");
+    setShow("countries");
+  };
 
     return (
     <div className="w-full">
@@ -121,7 +215,8 @@ const CountrieOption = () => {
                     {cities.map((city) => (
                         <option key={city.city_name}
                         value={city.city_name}
-                        onClick={() => handleCityClick(city.city_name)}
+                        /* onClick={() => handleCityClick(city.city_name)} */
+                        onClick={() => handleCityChange}
                         >
                             {city.city_name}
                         </option>
