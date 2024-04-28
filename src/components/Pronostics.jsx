@@ -13,7 +13,7 @@ const Pronostics = () => {
   const obtenerPronostico = async () => {
     try {
       const pronostico = await fetchPronostic();
-      console.log("Pronóstico actualizado:", pronostico);
+      // console.log("Pronóstico actualizado:", pronostico);
       setForecastData(pronostico);
       setLoading(false);
     } catch (error) {
@@ -78,7 +78,7 @@ const Pronostics = () => {
   const actualizarPronostico = async (cityName) => {
     try {
       const pronostico = await fetchPronostic(cityName);
-      console.log("Pronóstico actualizado para", cityName, ":", pronostico);
+      // console.log("Pronóstico actualizado para", cityName, ":", pronostico);
       setForecastData(pronostico);
       setLoading(false);
     } catch (error) {
