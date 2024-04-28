@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import DataDay from "./DataDay";
-import CountrieOption from "./CountrieOption";
+// import CountrieOption from "./CountrieOption";
 import fetchWeather from "../helpers/fetchWeather";
 import Pronostics from "./Pronostics";
 import fetchMedellin from "../helpers/fetchMedellin";
@@ -60,7 +60,7 @@ const FetchComponents = () => {
     fetchFunction()
     .then((data) => {
       setWeatherData(data);
-      console.log(data)
+      // console.log(data)
     })
     .catch((error) => {
       setWeatherData(null);
@@ -167,9 +167,9 @@ const FetchComponents = () => {
                   <span className="text-2xl font-semibold text-white"> °C</span>
                 </p>
                 <p>
-                  <strong className="text-4xl text-gray-500">{weatherData.main.temp_max.toFixed()}</strong>
-                  <sup className="text-sm text-gray-500 -top-7 -mr-6">max</sup>
-                  <span className="text-2xl font-semibold text-gray-500"> °C</span>
+                  <strong className="text-4xl text-gray-400">{weatherData.main.temp_max.toFixed()}</strong>
+                  <sup className="text-sm text-gray-400 -top-7 -mr-6">max</sup>
+                  <span className="text-2xl font-semibold text-gray-400"> °C</span>
                 </p>
               </div>
               <p className="my-4 text-3xl font-medium text-white">{weatherData.weather[0].description}</p>
