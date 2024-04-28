@@ -7,8 +7,7 @@ const BackgroundWeather = (iconCode) => {
         //dia
         '01d': 'https://img.freepik.com/vector-gratis/fondo-luz-dia-nublado-azul-diseno-tiempo_33099-512.jpg?size=626&ext=jpg',
         '02d': 'https://img.freepik.com/foto-gratis/cielo-morado-rosa-nubes-pajaros-volando-cielo_1340-35232.jpg?size=626&ext=jpg',
-        '03d': 'https://img.freepik.com/foto-gratis/cielo-morado-rosa-nubes-pajaros-volando-cielo_1340-35232.jpg?w=1380&t=st=1699387342~exp=1699387942~hmac=5176f6428fba6faca46297be34b144ac560eac7aa96396ab3d0ab511bf541b82',
-        '04d': 'https://img.freepik.com/foto-gratis/cielo-sobre-nubes-fondo-pantalla-nubes-cinematicas-6_1562-743.jpg?w=1380&t=st=1699387477~exp=1699388077~hmac=86885d63650272126ba63f566c4a5a74b6c7d5a8e950cdba4e02978adc022007',
+        '03d': 'https://programacion.net/files/article/article_02035_.jpg',
         '09d': 'https://img.freepik.com/foto-gratis/ciudad-noche-traves-ventana-gotas-lluvia_53876-128778.jpg?w=1380&t=st=1699387749~exp=1699388349~hmac=6fc95c4138e4e465a3f49d0f354bdb025325915877a91779eef23cb017eba125',
         '10d': 'https://i.pinimg.com/236x/3e/57/a2/3e57a2607133a29bb7a826135062a95c.jpg',
         '11d': 'https://img.freepik.com/foto-gratis/composicion-efectos-meteorologicos_23-2149853316.jpg?w=1380&t=st=1699388097~exp=1699388697~hmac=755c09078bce9df84c5e40ad9dc09810939b32a68955a673fd2a627179c60b07',
