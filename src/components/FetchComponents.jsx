@@ -28,13 +28,11 @@ const FetchComponents = () => {
 
     fetchWeather(query)
       .then((data) => {
-        // console.log(data)
         setWeatherData(data);
         setHumidity(data.main.humidity);
         setShowNoDataAlert(false);
         setLoadingAndLocation((prevState) => ({...prevState, isLoading:false}));
         setLoadingAndLocation((prevState) => ({...prevState, isLoadingInitial:false}));
-        // console.log(data)
       })
       .catch((error) => {
         setWeatherData(null);
@@ -62,6 +60,7 @@ const FetchComponents = () => {
     fetchFunction()
     .then((data) => {
       setWeatherData(data);
+      console.log(data)
     })
     .catch((error) => {
       setWeatherData(null);
@@ -160,10 +159,19 @@ const FetchComponents = () => {
               {/* <img src={iconsWeather} alt="" /> */}
             </div>
             <div>
-              <p>
-                <strong className="text-6xl text-white">{weatherData.main.temp.toFixed()}</strong>
-                <span className="text-2xl font-semibold text-white"> °C</span>
-              </p>
+              {/* temperatura minima y temperatura maxima */}
+              <div className="flex w-full justify-evenly">
+                <p>
+                  <strong className="text-4xl text-white">{weatherData.main.temp_min.toFixed()}</strong>
+                  <sup className="text-sm text-white -top-7 -mr-6">min</sup>
+                  <span className="text-2xl font-semibold text-white"> °C</span>
+                </p>
+                <p>
+                  <strong className="text-4xl text-gray-500">{weatherData.main.temp_max.toFixed()}</strong>
+                  <sup className="text-sm text-gray-500 -top-7 -mr-6">max</sup>
+                  <span className="text-2xl font-semibold text-gray-500"> °C</span>
+                </p>
+              </div>
               <p className="my-4 text-3xl font-medium text-white">{weatherData.weather[0].description}</p>
             </div>
           </div>
@@ -222,8 +230,8 @@ const FetchComponents = () => {
         <section className="sectcion2Fetcomponet w-full flex flex-col items-center">
           <Pronostics />
           {loadingAndLocation.locationPermissionDenied && (
-            <p className="font-semibold text-sm text-lime-600">
-              Activa la ubicación para mostrar el pronostico del clima.
+            <p className="font-semibold text-xl text-amber-400 bg-zinc-950 bg-opacity-50 w-full text-center py-5 px-3">
+              Activa la ubicación para mostrar el pronóstico del clima en tu ubicación actual.
             </p>
           )}
         </section>
@@ -248,10 +256,10 @@ const FetchComponents = () => {
 
               {/* viento */}
               <div className="bg-[#1E213A] w-[300px] h-[13rem] mb-5 flex flex-col justify-between items-center py-4">
-                <p className="text-[#e7e7eb] text-xs">Estado del viento</p>
+                <p className="text-[#e7e7eb] text-xs">Velocidad del viento</p>
                 <h3 className="text-6xl py-3 font-bold">
                   {weatherData.wind.speed.toFixed(1)} 
-                  <span className="text-4xl">mhp</span>
+                  <span className="text-4xl">m/s</span>
                 </h3>
                 <div className="flex justify-center items-center">
                   <div className="bg-[#FFFFFF4D] rounded-full p-1 text-lg">
@@ -293,7 +301,7 @@ const FetchComponents = () => {
                 <p className="text-[#e7e7eb] text-xs">Precision del aire</p>
                 <h3 className="text-6xl py-3 font-bold -mt-2">
                   {weatherData.main.pressure} 
-                  <span className="text-4xl">mb</span>
+                  <span className="text-4xl">hPa</span>
                 </h3>
               </div>
             </section>
