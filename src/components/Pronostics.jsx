@@ -154,7 +154,7 @@ const submit = () => {
               <h3 className="font-semibold text-xl">
                 {obtenerFechaFormateada(forecastData.list[1].dt_txt)}
               </h3>
-              <p className="font-semibold text-xs tex">8 horas</p>
+              <p className="font-semibold text-xs tex">{forecastData.list[1].dt_txt.slice(11, 16)}</p>
               <img
                 src={iconForecast ? iconsWeather(forecastData.list[1].weather[0].icon) : null}
                 alt="Icono del tiempo"
@@ -178,7 +178,7 @@ const submit = () => {
                   forecastData.list[8].dt_txt
                 )}
               </h3>
-              <p className="font-semibold text-xs tex">Mañana</p>
+              <p className="font-semibold text-xs tex">{forecastData.list[8].dt_txt.slice(11, 16)}</p>
               <img
                 src={iconForecast ? iconsWeather(forecastData.list[8].weather[0].icon) : null}
                 alt="Icono del tiempo"
@@ -202,7 +202,7 @@ const submit = () => {
                   forecastData.list[16].dt_txt
                 )}
               </h3>
-              <p className="font-semibold text-xs tex">2 días</p>
+              <p className="font-semibold text-xs tex">{forecastData.list[16].dt_txt.slice(11, 16)}</p>
               <img
                 src={iconForecast ? iconsWeather(forecastData.list[16].weather[0].icon) : null}
                 alt="Icono del tiempo"
@@ -226,7 +226,7 @@ const submit = () => {
                   forecastData.list[24].dt_txt
                 )}
               </h3>
-              <p className="font-semibold text-xs tex">3 días</p>
+              <p className="font-semibold text-xs tex">{forecastData.list[16].dt_txt.slice(11, 16)}</p>
               <img
                 src={iconForecast ? iconsWeather(forecastData.list[24].weather[0].icon) : null}
                 alt="Icono del tiempo"
