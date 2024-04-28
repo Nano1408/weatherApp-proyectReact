@@ -6,7 +6,7 @@ function App() {
   // const [count, setCount] = useState(0)
 
   return (
-    <div className='w-full '>
+    <div className='overflow-y-auto overflow-x-auto'>
       <FetchComponents />
     </div>
   )

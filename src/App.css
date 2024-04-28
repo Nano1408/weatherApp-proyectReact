@@ -1,51 +1,37 @@
-body {
-    position: relative;
-}
-
 :root {
     --background-image-url: 'URL_de_imagen_predeterminada.jpg'; /* Establece una imagen predeterminada */
-  }
+}
 
 #sectionFectComponent {
-    position: relative;
+    /* position: relative; */
     transition: 500ms;
-  }
-  
-  #sectionFectComponent::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: var(--background-image-url);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: blur(3px);
-    transition: 500ms;
-    z-index: -1;
-  }
+}
 
-/* body::before {
+#sectionFectComponent {
+    background: #100E1D;
+    /* z-index: -1; */
+}
+
+/* section 2 del componente <FetchComponents/> */
+.divContSections::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: #100E1D;
-    background-position: top;
+    background-image: var(--background-image-url);
+    background-repeat: no-repeat;
     background-size: cover;
-    filter: blur(3px);
+    filter: blur(5px);
+    width:-webkit-fill-available;
+    height: 100vh;
+    transition: 500ms;
     z-index: -1;
-} */
+}
+
 
 .container-search {
     position: relative;
 }
 
-.container-search::before {
+/* .container-search::before {
     content: "";
     position: absolute;
     top: 0;
@@ -59,7 +45,7 @@ body {
     background-size:contain;
     filter: blur(2px);
     z-index: -1;
-}
+} */
 
 /* barra de progreso, estilos */
 .humidity-bar {
@@ -153,7 +139,9 @@ body {
     transition: transform 0.5s ease, opacity 0.5s ease;
   }
 
-/* media query */
+  /* ############################################################# */
+/* ################## MEDIA QUERY ################################ */
+/* ############################################################### */
 @media screen and (max-width:980px) {
     .containerSectionEstado > div {
         width: 200px;
@@ -163,6 +151,18 @@ body {
     }
     .containerSectionEstado > div > h3 > span{
         font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 830px) {
+    .clima-med-bog {
+        margin: 0 !important;
+        display: block;
+        width: 200px;
+    }
+    .clima-med-bog:last-child{
+        margin-top: 10px !important;
+
     }
 }
 
@@ -186,6 +186,24 @@ body {
 }
 
 @media screen and (max-width:500px) {
+    /* section 2 del componente <FetchComponents/> */
+    .divContSections::before {
+        position: relative;
+    }
+    #sectionFectComponent {
+        background:none;
+    }
+    #sectionFectComponent::before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: var(--background-image-url);
+        filter: blur(5px);
+        transition: 500ms;
+        z-index: -1;
+    }
+
     #containerFetchComponent {
         display: block;
     }

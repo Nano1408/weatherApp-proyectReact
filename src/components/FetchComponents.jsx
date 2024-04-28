@@ -121,7 +121,7 @@ const FetchComponents = () => {
   
 
   return (
-    <div className="w-full flex h-screen" id="containerFetchComponent">
+    <div className="flex h-screen" id="containerFetchComponent">
       <section id="sectionFectComponent"
         className="container-search overflow-y-auto w-[30rem] text-center h-screen flex flex-col items-center justify-center"
       >
@@ -147,7 +147,8 @@ const FetchComponents = () => {
           <span className="loader"></span>
         )}
 
-        <CountrieOption />
+        {/* Cmponente no terminado, para seleccionar por region o estado */}
+        {/* <CountrieOption /> */}
 
         {loadingAndLocation.isLoading ? (
           <span className="loader"></span>
@@ -181,13 +182,13 @@ const FetchComponents = () => {
         <div className="mt-5">
           <button
             onClick={() => getClima(fetchMedellin)}
-            className="mr-3 bg-stone-100 text-black font-semibold pt-2 pb-2 pr-5 pl-5 rounded-sm hover:bg-red-600 hover:text-white"
+            className="clima-med-bog mr-3 bg-stone-100 text-black font-semibold pt-2 pb-2 pr-5 pl-5 rounded-sm hover:bg-red-600 hover:text-white"
           >
             Clima Medellín
           </button>
           <button
             onClick={() => getClima(fetchBogota)}
-            className="bg-slate-800 font-semibold text-white pt-2 pb-2 pr-5 pl-5 rounded-sm hover:bg-red-600"
+            className="clima-med-bog bg-slate-800 font-semibold text-white pt-2 pb-2 pr-5 pl-5 rounded-sm hover:bg-red-600"
           >
             Clima Bogotá
           </button>
@@ -215,7 +216,7 @@ const FetchComponents = () => {
           <span className="loader loader-calc mt-10"></span>
         </div>
       ) :
-      <section className="divContSections w-full min-h-screen overflow-y-auto bg-[#100E1D]">
+      <section className="divContSections w-full min-h-screen overflow-y-auto">
 
         {/* pronostico */}
         <section className="sectcion2Fetcomponet w-full flex flex-col items-center">
