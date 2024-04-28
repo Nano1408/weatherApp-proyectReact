@@ -5,14 +5,15 @@ const BackgroundWeather = (iconCode) => {
 
     const backgroundImage = {
         //dia
-        '01d': 'https://img.freepik.com/vector-gratis/fondo-luz-dia-nublado-azul-diseno-tiempo_33099-512.jpg?size=626&ext=jpg',
-        '02d': 'https://img.freepik.com/foto-gratis/cielo-morado-rosa-nubes-pajaros-volando-cielo_1340-35232.jpg?size=626&ext=jpg',
+        '01d': 'https://watv.org/wp-content/uploads/2020/06/good-weather.jpg',
+        '02d': 'https://p1.pxfuel.com/preview/844/761/114/sky-blue-wide-blue-sky.jpg',
         '03d': 'https://programacion.net/files/article/article_02035_.jpg',
-        '09d': 'https://img.freepik.com/foto-gratis/ciudad-noche-traves-ventana-gotas-lluvia_53876-128778.jpg?w=1380&t=st=1699387749~exp=1699388349~hmac=6fc95c4138e4e465a3f49d0f354bdb025325915877a91779eef23cb017eba125',
+        '04d': 'https://fotos.perfil.com/2022/02/18/trim/1280/720/1802cielo-1314788.jpg',
+        '09d': 'https://miro.medium.com/v2/resize:fit:900/1*FJzTpQjyQbjF3xCy3UdmfA.png',
         '10d': 'https://i.pinimg.com/236x/3e/57/a2/3e57a2607133a29bb7a826135062a95c.jpg',
-        '11d': 'https://img.freepik.com/foto-gratis/composicion-efectos-meteorologicos_23-2149853316.jpg?w=1380&t=st=1699388097~exp=1699388697~hmac=755c09078bce9df84c5e40ad9dc09810939b32a68955a673fd2a627179c60b07',
-        '13d': 'https://img.freepik.com/foto-gratis/paisaje-invierno-cubierto-nieve-3d_1048-11056.jpg?w=826&t=st=1699388156~exp=1699388756~hmac=a0f64666db2a1df8e2232b2b48f40149123c8cd36afb64250e166a84d9f2cc23',
-        '50d': 'https://img.freepik.com/foto-gratis/hermosa-vista-rural-arboles_23-2149125559.jpg?w=740&t=st=1699388281~exp=1699388881~hmac=89fbf5e2525d8697f80b63a2c90915a21bf36aa6d0374975fab7cc72aa4dbaac',
+        '11d': 'https://images.unsplash.com/photo-1537210249814-b9a10a161ae4?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ&w=1200',
+        '13d': 'https://c4.wallpaperflare.com/wallpaper/160/111/725/animales-felino-gato-nieve-wallpaper-preview.jpg',
+        '50d': 'https://img.freepik.com/fotos-premium/bosque-coniferas-fisuras-niebla-fondo-pantalla-hd-8k-imagen-fotografica_973183-3814.jpg',
         //noche
         '01n': 'https://img.freepik.com/vector-gratis/paisaje-pantano-noche_1110-772.jpg?size=626&ext=jpg',
         '02n': 'https://img.freepik.com/vector-gratis/diseno-plano-agricultura-ecologica-fondo-noche_52683-77146.jpg?w=1800&t=st=1699387270~exp=1699387870~hmac=26b394cc3db53f4ccded4b38c8162644ce5803158a530a95e7e376a390b40038',
@@ -25,7 +26,7 @@ const BackgroundWeather = (iconCode) => {
         '50n': 'https://img.freepik.com/vector-gratis/3d-ilustracion-realista-niebla-niebla-gris-o-humo-cigarrillo_33099-754.jpg?w=1380&t=st=1699388234~exp=1699388834~hmac=cad07dd57d59899e8f37c119d4ed720199efb59bd446cdcf18cfc40e9550dfdc',
     }
 
-    const backgroundImageURL = backgroundImage[iconCode] || '/public/nubes.png';
+    const backgroundImageURL = backgroundImage[iconCode] || 'https://programacion.net/files/article/article_02035_.jpg';
 
     return backgroundImageURL;
 }
