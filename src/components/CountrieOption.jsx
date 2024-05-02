@@ -4,82 +4,82 @@ import { fetchAccesToken } from "../api/auth";
 import { BiReset } from "react-icons/bi";
 
 const CountrieOption = () => {
-  const [countries, setCountries] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState("");
-  const [states, setStates] = useState([]);
-  const [selectedState, setSelectedState] = useState("");
-  const [cities, setCities] = useState([]);
-  const [selectedCity, setSelectedCity] = useState("");
-  const [auth_token, setAuth_token] = useState(null);
-  const [show, setShow] = useState("countries");
+const [countries, setCountries] = useState([]);
+const [selectedCountry, setSelectedCountry] = useState("");
+const [states, setStates] = useState([]);
+const [selectedState, setSelectedState] = useState("");
+const [cities, setCities] = useState([]);
+const [selectedCity, setSelectedCity] = useState("");
+const [auth_token, setAuth_token] = useState(null);
+const [show, setShow] = useState("countries");
 
-  console.log(countries);
-  console.log(selectedCountry);
-  console.log(selectedState);
-  console.log(selectedCity);
+console.log(countries);
+console.log(selectedCountry);
+console.log(selectedState);
+console.log(selectedCity);
 
-  useEffect(() => {
+useEffect(() => {
     fetchAccesToken()
-      .then((token) => {
+    .then((token) => {
         setAuth_token(token);
         fetchCountries(token)
-          .then((data) => {
+        .then((data) => {
             setCountries(data);
-          });
-      })
-      .catch((error) => {
+        });
+    })
+    .catch((error) => {
         console.error("Error fetching access token:", error);
-      });
-  }, []);
+    });
+}, []);
 
-  const memoizedFetchState = useMemo(() => fetchState, []);
-  const memoizedFetchCities = useMemo(() => fecthCities, []);
+const memoizedFetchState = useMemo(() => fetchState, []);
+const memoizedFetchCities = useMemo(() => fecthCities, []);
 
-  const handleCountryChange = (e) => {
+const handleCountryChange = (e) => {
     const selectedCountryValue = e.target.value;
     setSelectedCountry(selectedCountryValue);
     setShow("states");
 
     memoizedFetchState(auth_token, selectedCountryValue)
-      .then((data) => {
+    .then((data) => {
         setStates(data);
-      })
-      .catch((error) => {
+    })
+    .catch((error) => {
         console.error("Error fetching states:", error);
-      });
-  };
+    });
+};
 
-  const handleStateChange = (e) => {
+const handleStateChange = (e) => {
     const selectedStateValue = e.target.value;
     setSelectedState(selectedStateValue);
     setShow("cities");
 
     memoizedFetchCities(auth_token, selectedStateValue)
-      .then((data) => {
+    .then((data) => {
         setCities(data);
-      })
-      .catch((error) => {
+    })
+    .catch((error) => {
         console.error("Error fetching cities:", error);
-      });
-  };
+    });
+};
 
-  const handleCityChange = (e) => {
+const handleCityChange = (e) => {
     const selectedCityValue = e.target.value;
     setSelectedCity(selectedCityValue);
     setShow("cities");
-  };
+};
 
   //te implemente el usememo porque te estaba renderizando muchisimas veces el componente
   //como ya tienes los valores de las 3 cosas pais, estado, ciudad...ya puedes hacer el fetch
   //https://api.openweathermap.org/data/2.5/weather?q={city name},{state code},{country code}&appid={API key}
   //la cosa es que necesitas tener los codigos de los estados y los paises, en los paises te llega como country_short_name
 
-  const handleReset = () => {
+const handleReset = () => {
     setSelectedCountry("");
     setSelectedState("");
     setSelectedCity("");
     setShow("countries");
-  };
+};
 
     return (
     <div className="w-full">
